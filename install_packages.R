@@ -1,6 +1,6 @@
 ### package setup
-# run this file once from the project folder to install missing packages
-# installation stays separate so the app never installs software on startup
+# the app runs this file before loading its packages
+# install only missing packages so later launches do not reinstall them
 if (getRversion() < "4.1") {
   stop("Please use R 4.1 or newer for this example.")
 }

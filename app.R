@@ -4,6 +4,10 @@
 # the server contains the code that responds to choices and fills those spaces
 # the setup code below prepares the data and settings used by both parts
 
+# install missing packages on the first launch and reuse them on later launches
+# the separate setup file keeps installation code out of the teaching sections
+source("install_packages.R", local = TRUE)
+
 # load the tools for page controls and updates when choices change
 library(shiny)
 # build plots by combining data, axes, points, bars and appearance settings
@@ -17,14 +21,13 @@ library(plotly)
 # change the text below to change the large heading at the top of the app
 app_title <- "Watershed explorer"
 
-# the compare sites tab needs a csv with one row per site
-# before starting the app, follow the readme commands in the rstudio console
-# choose the downloaded site averages csv when the file window opens
-# to use your own data, choose your own site table in that window instead
-# this line reads that file path from your r session
-# if no file was chosen, it uses data/example_sites.csv from the app folder
-# the daily observations file is selected separately in the time series section
-data_file <- Sys.getenv("AGU_SHINY_DATA_FILE", unset = "data/example_sites.csv")
+# put the downloaded site averages csv inside the app's data folder
+# the compare sites tab reads one row per site from this file
+# to use your own site table, change the filename below and match its columns below
+data_file <- "data/example_sites_water_quality.csv"
+if (!file.exists(data_file)) {
+  stop("Put example_sites_water_quality.csv in the app's data folder, then click Run App again.")
+}
 
 # tell the app which csv columns hold the site id, name, group and coordinates
 # keep id, name, group, latitude and longitude on the left as written
@@ -212,7 +215,8 @@ group_colors[names(group_colors) == "Not available"] <- "#8a8f94"
 ### time series data
 # the daily file is optional so the comparison tab works on its own
 # read only columns needed by the plots to keep startup quick
-time_series_file <- Sys.getenv("AGU_SHINY_TIME_SERIES_FILE", unset = "")
+# the second downloaded csv goes in the same data folder
+time_series_file <- "data/usgs_time_series.csv"
 time_series_data <- NULL
 if (nzchar(time_series_file) && file.exists(time_series_file)) {
   time_columns <- c("Stream_ID", "Stream_Name", "date", "type", "parameter", "units",
@@ -297,12 +301,12 @@ draw_time_series <- function(rows, separate_panels = FALSE, plot_height = 360) {
 }
 
 ### time series page
-# show a helpful message when the separate daily file has not been selected
+# show a helpful message when the daily csv is missing from the data folder
 # assemble this page piece now and insert it into the time-series tab later
 time_series_ui <- if (is.null(time_series_data)) {
   div(class = "display-panel",
-      p("Select the shared usgs_time_series.csv in RStudio before starting the app."),
-      p("The README explains the file setting. The comparison tab can be used without this file."))
+      p("Put usgs_time_series.csv in the app's data folder, then stop and run the app again."),
+      p("The comparison tab works without this file."))
 } else {
   # the page uses twelve columns: three for controls and nine for the results
   sidebarLayout(

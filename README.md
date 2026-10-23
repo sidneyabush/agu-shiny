@@ -6,30 +6,24 @@ Explore sites, water quality, and streamflow with a beginner-friendly Shiny app.
 
 Install [R](https://cran.r-project.org/) and [RStudio Desktop](https://docs.posit.co/ide/user/download.html) if needed.
 
-Download and extract the [app ZIP](https://github.com/sidneyabush/agu-shiny/archive/refs/heads/main.zip). Keep the extracted folder together.
-
-Download both data files and save them somewhere easy to find:
+Download and unzip the [app](https://github.com/sidneyabush/agu-shiny/archive/refs/heads/main.zip).
+Download both CSVs and put them inside the app's `data` folder:
 
 - [Site averages](https://github.com/sidneyabush/agu-shiny/releases/download/workshop-data/example_sites_water_quality.csv)
 - [Daily observations](https://github.com/sidneyabush/agu-shiny/releases/download/workshop-data/usgs_time_series.csv)
 
-## Run the app
+Keep their filenames unchanged.
 
-Open `agu-shiny-template.Rproj` from the extracted folder in RStudio.
-Run these lines one at a time in the **Console** (beside the `>` prompt).
-Wait for package installation to finish before continuing.
+## Run
 
-```r
-source("install_packages.R")
-Sys.setenv(AGU_SHINY_DATA_FILE = file.choose())
-Sys.setenv(AGU_SHINY_TIME_SERIES_FILE = file.choose())
-shiny::runApp(".")
-```
+Open `agu-shiny-template.Rproj` in RStudio, open `app.R`, and click **Run App**
+above the code.
 
-Choose `example_sites_water_quality.csv` in the first file window and
-`usgs_time_series.csv` in the second. The app then opens in a viewer or browser.
+If Shiny is not installed, use **Tools → Install Packages**, enter `shiny`,
+and click **Install**. Then click **Run App**. Other missing packages install
+automatically on the first launch; stay online and allow a few minutes.
 
-## Explore the code
+## Edit
 
-Open `app.R` to read the comments and make changes. Save your edits, click
-**Stop** in the Console, and run `shiny::runApp(".")` again.
+The comments in `app.R` explain the code. After editing, save the file, click
+**Stop**, and click **Run App** again.
