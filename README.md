@@ -4,6 +4,9 @@ This app compares site averages and plots daily water-quality and streamflow
 time series. This guide explains how to open it, use it, and find the code
 behind each feature. No Shiny experience is needed.
 
+Open `app.R` to see the app code and teaching comments. `install_packages.R`
+installs the packages it needs. The `data` folder holds the included example data.
+
 ## Get the app running
 
 Install [R from CRAN](https://cran.r-project.org/), then install the free
